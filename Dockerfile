@@ -1,6 +1,7 @@
 FROM golang:1.24-alpine
 WORKDIR /app
-RUN ln -s /app /root/.config/fabric
+RUN mkdir /root/.config/ && \
+    ln -s /app /root/.config/fabric
 RUN apk update && \
     apk upgrade && \
     apk add git curl libc6-compat && \
@@ -9,8 +10,6 @@ RUN apk update && \
     mv fabric/strategies strategies && \
     rm -rf fabric
 RUN curl -L https://github.com/danielmiessler/fabric/releases/latest/download/fabric-linux-amd64 > fabric && chmod +x fabric
-RUN mkdir -p .config/fabric && \
-    ls -la .config/fabric/
 
 ENV PATTERNS_LOADER_GIT_REPO_URL=https://github.com/danielmiessler/fabric.git
 ENV PATTERNS_LOADER_GIT_REPO_PATTERNS_FOLDER=patterns
@@ -43,6 +42,8 @@ ENV EXOLAB_MODELS=""
 ENV LITELLM_API_KEY=""
 ENV LITELLM_API_BASE_URL=""
 ENV YOUTUBE_API_KEY=""
+ENV GIN_MODE=release
+RUN env > .env
 
 EXPOSE 8080
 	
