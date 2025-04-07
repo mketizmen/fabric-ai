@@ -12,5 +12,5 @@ RUN mkdir -p .config/fabric && \
     
 EXPOSE 8080
 	
-ENTRYPOINT ["/app"]
+ENTRYPOINT ["/app/fabric"]
 CMD ["--serve"]
