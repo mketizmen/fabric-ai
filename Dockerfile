@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM golang:1.24-alpine
 WORKDIR /app
 RUN apk update && \
     apk upgrade && \
