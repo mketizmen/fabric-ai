@@ -4,12 +4,16 @@ RUN mkdir /root/.config/ && \
     ln -s /app /root/.config/fabric
 RUN apk update && \
     apk upgrade && \
-    apk add git curl libc6-compat && \
+    apk add git curl libc6-compat nodejs npm && \
     git clone https://github.com/danielmiessler/fabric && \
     mv fabric/patterns patterns && \
     mv fabric/strategies strategies && \
+    mv fabric/web web && \
     rm -rf fabric
 RUN curl -L https://github.com/danielmiessler/fabric/releases/latest/download/fabric-linux-amd64 > fabric && chmod +x fabric
+
+RUN cd web && \ 
+  npm install
 
 ENV PATTERNS_LOADER_GIT_REPO_URL=https://github.com/danielmiessler/fabric.git
 ENV PATTERNS_LOADER_GIT_REPO_PATTERNS_FOLDER=patterns
